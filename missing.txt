@@ -1,0 +1,23 @@
+Missing values may be defined by the <MISSING> </MISSING> tags.   
+•	The value between the tags must be a numeric value.  
+•	It may be positive or negative.  
+•	It may be an integer or float value.
+•	Valid ranges for this value must fall with the ranges
+[-9999.0f,9999.0f] [-9999,9999]
+•	The missing indicator will be applied to all ASCI IDs defined in
+the <met></met> tags.  The affect will be a “0” “M” (zero missing)
+applied to the identified ASCII ID.
+
+	
+Example:
+    
+<?xml version="1.0">
+<message>
+<station>41X14</station>
+<date>03/01/2008 01:00:00</date>
+<missing>-9999</missing>
+<met>
+    <wspd1>11.1</wspd1>
+    <wdir1>182</wdir1>
+    <baro1>-9999</baro1>
+</met>
