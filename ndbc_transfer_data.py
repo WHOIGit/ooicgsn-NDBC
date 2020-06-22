@@ -33,7 +33,7 @@ if __name__ == '__main__':
                 file = open(f'Data/{xml_file}', 'rb')
 
                 # Transfer the file
-                session.storlines(f'STOR {xml_file}', file)
+#                session.storlines(f'STOR {xml_file}', file)
 
                 # Close the file
                 file.close()
