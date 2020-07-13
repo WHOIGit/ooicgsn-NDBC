@@ -455,9 +455,8 @@ gi01sumo_name_map = {
 
 # =============================================================================
 if __name__ == '__main__':
-    # Temporary Data directory path
-    dataPath = '/home/ooiuser/ndbc-testing/NDBC/Data'
-    #dataPath = 'Data'
+    # Data directory path
+    dataPath = '/home/ooiuser/ndbc/data'
 
     # Get the last 24-hours of data
     currentTime = dt.datetime.now(tz=pytz.UTC)

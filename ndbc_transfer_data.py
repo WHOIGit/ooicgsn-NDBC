@@ -10,9 +10,7 @@ warnings.filterwarnings("ignore")
 if __name__ == '__main__':
     # =========================================================================
     # Data directory path
-    dataPath = '/home/ooiuser/ndbc-testing/NDBC/Data' # Absolute path, for testing
-    #dataPath = '/home/ooiuser/NDBC/Data' # Final absolute path, for production
-    #dataPath = 'Data' # Original relative path, for testing
+    dataPath = '/home/ooiuser/ndbc/data'
     
     # Load the data from the yaml file
     user_info = yaml.load(open(f'{dataPath}/../ndbc_user_info.yaml'))
@@ -62,7 +60,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Now record the log info
-    with open(f'{dataPath}/../../ndbc_logs/log_{date}.txt', 'a') as file:
+    with open(f'{dataPath}/../ndbc-logs/log_{date}.txt', 'a') as file:
         for line in log:
             file.write(f'{line}\n')
 
