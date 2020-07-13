@@ -25,7 +25,7 @@ Note, this "NDBC" repo is renamed to "ndbc-code" above.
 
 #### 2. Copy the `ndbc_user_info.yaml` file into the `ndbc` directory
 
-#### 3. Set up the appropriate python environment (NDBC) from the `ndbc_env.yaml` file.
+#### 3. Set up the appropriate python environment (NDBC) from the `ndbc_env.yaml` file
 
 Make sure that miniconda or anaconda3 has been installed.
 
@@ -33,7 +33,7 @@ Make sure that miniconda or anaconda3 has been installed.
 conda env create -f ndbc_env.yaml
 ```
 
-#### 4. Set up the hourly cron job
+#### 4. Set up the hourly cron job as ooiuser
 
 ```
 crontab -e
