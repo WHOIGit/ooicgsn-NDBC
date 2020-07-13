@@ -33,6 +33,19 @@ Make sure that miniconda or anaconda3 has been installed.
 conda env create -f ndbc_env.yaml
 ```
 
+#### 4. Set up the hourly cron job
+
+```
+crontab -e
+```
+
+Insert the following lines:
+
+```
+# NDBC file processing & transfer
+00 * * * * /home/ooiuser/ndbc/ndbc-code/ndbc.sh >> /tmp/ndbc_script_log.txt 2>&1
+```
+        
 ### Files in this repo
 * **ndbc_env.yaml** - YAML file that sets up the appropriate conda environment
 * **ndbc_process_data.py** - Python file which downloads the METBK and WAVSS data from the OOI OMS++ ERDDAP server for the past 3 hours, processes the data into the xml format needed by NDBC, and saves the xml files to a temporary data directory.
