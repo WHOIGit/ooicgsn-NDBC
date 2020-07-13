@@ -1,5 +1,5 @@
 #!/bin/bash
-mkdir Data/
-source activate NDBC && python3 ndbc_data_packaging.py \
+mkdir /home/ooiuser/ndbc-testing/NDBC/Data/
+source activate NDBC && python3 ndbc_process_data.py \
 source activate NDBC && python3 ndbc_transfer_data.py
-rm -r Data/
+rm -r /home/ooiuser/ndbc-testing/NDBC/Data/

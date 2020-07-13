@@ -9,8 +9,12 @@ warnings.filterwarnings("ignore")
 
 if __name__ == '__main__':
     # =========================================================================
+    # Temporary Data directory path
+    dataPath = '/home/ooiuser/ndbc-testing/NDBC/Data'
+    #dataPath = 'Data'
+    
     # Load the data from the yaml file
-    user_info = yaml.load(open("ndbc_user_info.yaml"))
+    user_info = yaml.load(open('{dataPath}/../ndbc_user_info.yaml'))
     USERNAME = user_info['username']
     PASSWORD = user_info['password']
     FTP = user_info['ftp']
@@ -26,11 +30,11 @@ if __name__ == '__main__':
         session = ftplib.FTP(FTP, USERNAME, PASSWORD)
         log.append(','.join((timestamp, f'Connected to {FTP}')))
 
-        for xml_file in [x for x in os.listdir('Data')]:
+        for xml_file in [x for x in os.listdir('{dataPath}')]:
             # Attempt to transfer the xml files
             try:
                 # Open file to transfer
-                file = open(f'Data/{xml_file}', 'rb')
+                file = open(f'{dataPath}/{xml_file}', 'rb')
 
                 # Transfer the file
 #                session.storlines(f'STOR {xml_file}', file)
@@ -56,7 +60,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Now record the log info
-    with open(f'log_{date}.txt', 'a') as file:
+    with open(f'{dataPath}/../../ndbc_logs/log_{date}.txt', 'a') as file:
         for line in log:
             file.write(f'{line}\n')
 

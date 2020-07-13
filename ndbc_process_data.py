@@ -455,6 +455,10 @@ gi01sumo_name_map = {
 
 # =============================================================================
 if __name__ == '__main__':
+    # Temporary Data directory path
+    dataPath = '/home/ooiuser/ndbc-testing/NDBC/Data'
+    #dataPath = 'Data'
+
     # Get the last 24-hours of data
     currentTime = dt.datetime.now(tz=pytz.UTC)
     startTime = currentTime - dt.timedelta(days=1)
@@ -485,7 +489,7 @@ if __name__ == '__main__':
     CNSM.xml = CNSM.parse_data_to_xml(CNSM.data)
 
     # Write the data out to a file
-    with open(f'Data/{CNSM.WMO}_{timestamp}.xml', 'w') as file:
+    with open(f'{dataPath}/{CNSM.WMO}_{timestamp}.xml', 'w') as file:
         for line in CNSM.xml:
             file.write(f'{line}\n')
 
@@ -512,7 +516,7 @@ if __name__ == '__main__':
     ISSM.xml = ISSM.parse_data_to_xml(ISSM.data)
 
     # Write the data out to a file
-    with open(f'Data/{ISSM.WMO}_{timestamp}.xml', 'w') as file:
+    with open(f'{dataPath}/{ISSM.WMO}_{timestamp}.xml', 'w') as file:
         for line in ISSM.xml:
             file.write(f'{line}\n')
 
@@ -539,7 +543,7 @@ if __name__ == '__main__':
     OSSM.xml = OSSM.parse_data_to_xml(OSSM.data)
 
     # Write the data out to a file
-    with open(f'Data/{OSSM.WMO}_{timestamp}.xml', 'w') as file:
+    with open(f'{dataPath}/{OSSM.WMO}_{timestamp}.xml', 'w') as file:
         for line in OSSM.xml:
             file.write(f'{line}\n')
 
@@ -568,6 +572,6 @@ if __name__ == '__main__':
     SUMO.xml = SUMO.parse_data_to_xml(SUMO.data)
 
     # Write the data out to a file
-    with open(f'Data/{SUMO.WMO}_{timestamp}.xml', 'w') as file:
+    with open(f'{dataPath}/{SUMO.WMO}_{timestamp}.xml', 'w') as file:
         for line in SUMO.xml:
             file.write(f'{line}\n')

@@ -127,3 +127,4 @@ dmypy.json
 
 # =========================================================================
 # Project specific additions
+ndbc_user_info.yaml
