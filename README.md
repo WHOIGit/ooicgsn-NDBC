@@ -34,12 +34,12 @@ conda env create -f ndbc_env.yaml
 ```
 
 ### Files in this repo
-* ndbc_env.yaml - YAML file that sets up the appropriate conda environment
-* ndbc_process_data.py - Python file which downloads the METBK and WAVSS data from the OOI OMS++ ERDDAP server for the past 3 hours, processes the data into the xml format needed by NDBC, and saves the xml files to a temporary data directory.
-* ndbc_transfer_data.py - Python file which connects to the NDBC FTP server, opens the xml files in ASCII mode, and transfers the data to the NDBC FTP.
-* ndbc.sh - Bash shell script which creates a temporary data directory, activates the NDBC python environment, executes the ndbc_process_data.py and ndbc_transfer_data.py scripts, then cleans up and removes the Data directory.
+* **ndbc_env.yaml** - YAML file that sets up the appropriate conda environment
+* **ndbc_process_data.py** - Python file which downloads the METBK and WAVSS data from the OOI OMS++ ERDDAP server for the past 3 hours, processes the data into the xml format needed by NDBC, and saves the xml files to a temporary data directory.
+* **ndbc_transfer_data.py** - Python file which connects to the NDBC FTP server, opens the xml files in ASCII mode, and transfers the data to the NDBC FTP.
+* **ndbc.sh** - Bash shell script which creates a temporary data directory, activates the NDBC python environment, executes the ndbc_process_data.py and ndbc_transfer_data.py scripts, then cleans up and removes the Data directory.
 
 
 ### Files outside this repo
-* ndbc_user_info.yaml - YAML file which has the NDBC FTP server url, username, and password (this is not available on GitHub, and should be place in the same parent directory as this repo)
+* **ndbc_user_info.yaml** - YAML file which has the NDBC FTP server url, username, and password (this is not available on GitHub, and should be place in the same parent directory as this repo)
 
