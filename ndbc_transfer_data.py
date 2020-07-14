@@ -36,8 +36,8 @@ if __name__ == '__main__':
                 file = open(f'{dataPath}/{xml_file}', 'rb')
 
                 # Transfer the file
-                ##session.storlines(f'STOR {xml_file}', file)
-                log.append(','.join((timestamp, '[[ Temporarily disabled file transfer ]]')))
+                session.storlines(f'STOR {xml_file}', file)
+                ##log.append(','.join((timestamp, '[[ Temporarily disabled file transfer ]]')))
 
                 # Close the file
                 file.close()
