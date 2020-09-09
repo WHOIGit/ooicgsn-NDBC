@@ -460,7 +460,7 @@ if __name__ == '__main__':
 
     # Get the last 24-hours of data
     currentTime = dt.datetime.now(tz=pytz.UTC)
-    startTime = currentTime - dt.timedelta(days=1)
+    startTime = currentTime - dt.timedelta(hours=2)
     timestamp = currentTime.strftime('%Y%m%d%H%M%S')
 
     # =========================================================================
