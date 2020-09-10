@@ -456,10 +456,11 @@ gi01sumo_name_map = {
 # =============================================================================
 if __name__ == '__main__':
     # Data directory path
-    dataPath = '/home/ooiuser/ndbc/data'
+    # dataPath = '/home/ooiuser/ndbc/data'
+    dataPath = "/home/andrew/Documents/OOI-CGSN/NDBC/Data"
 
     # Get the last 24-hours of data
-    currentTime = dt.datetime.now(tz=pytz.UTC)
+    currentTime = dt.datetime.now(tz=pytz.UTC) - dt.timedelta(hours=2)
     startTime = currentTime - dt.timedelta(hours=2)
     timestamp = currentTime.strftime('%Y%m%d%H%M%S')
 
@@ -548,7 +549,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the GI01SUMO BUOY dataset
-    SUMO = NDBC('GI01SUMO', 'D0006', '44078', currentTime, startTime,
+    SUMO = NDBC('GI01SUMO', 'D0007', '44078', currentTime, startTime,
                 gi01sumo_data_map, gi01sumo_name_map)
 
     # Get the data for the Buoy
