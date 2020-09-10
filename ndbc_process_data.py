@@ -456,8 +456,7 @@ gi01sumo_name_map = {
 # =============================================================================
 if __name__ == '__main__':
     # Data directory path
-    # dataPath = '/home/ooiuser/ndbc/data'
-    dataPath = "/home/andrew/Documents/OOI-CGSN/NDBC/Data"
+    dataPath = '/home/ooiuser/ndbc/data'
 
     # Get the last 24-hours of data
     currentTime = dt.datetime.now(tz=pytz.UTC) - dt.timedelta(hours=2)
