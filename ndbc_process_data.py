@@ -521,7 +521,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP04OSSM BUOY Dataset
-    OSSM = NDBC('CP04OSSM', 'D0011', '44077', currentTime, startTime,
+    OSSM = NDBC('CP04OSSM', 'D0012', '44077', currentTime, startTime,
                 cp04ossm_data_map, cp04ossm_name_map)
 
     # Get the data for the Buoy
