@@ -465,7 +465,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP01CNSM BUOY dataset
-    CNSM = NDBC('CP01CNSM', 'D0013', '44076', currentTime, startTime,
+    CNSM = NDBC('CP01CNSM', 'D0014', '44076', currentTime, startTime,
                 cp01cnsm_data_map, cp01cnsm_name_map)
 
     # Get the data for the Buoy
@@ -494,7 +494,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP03ISSM BUOY Dataset
-    ISSM = NDBC('CP03ISSM', 'D0012', '44075', currentTime, startTime,
+    ISSM = NDBC('CP03ISSM', 'D0013', '44075', currentTime, startTime,
                 cp03issm_data_map, cp03issm_name_map)
 
     # Get the data for the Buoy
@@ -521,7 +521,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP04OSSM BUOY Dataset
-    OSSM = NDBC('CP04OSSM', 'D0012', '44077', currentTime, startTime,
+    OSSM = NDBC('CP04OSSM', 'D0013', '44077', currentTime, startTime,
                 cp04ossm_data_map, cp04ossm_name_map)
 
     # Get the data for the Buoy
