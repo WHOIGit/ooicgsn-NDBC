@@ -456,8 +456,8 @@ gi01sumo_name_map = {
 # =============================================================================
 if __name__ == '__main__':
     # Data directory path
-    dataPath = '/home/ooiuser/ndbc/data'
-
+    #dataPath = '/home/ooiuser/ndbc/data'
+    dataPath = "data"
     # Get the last 24-hours of data
     currentTime = dt.datetime.now(tz=pytz.UTC) - dt.timedelta(hours=2)
     startTime = currentTime - dt.timedelta(hours=2)
@@ -574,3 +574,5 @@ if __name__ == '__main__':
     with open(f'{dataPath}/{SUMO.WMO}_{timestamp}.xml', 'w') as file:
         for line in SUMO.xml:
             file.write(f'{line}\n')
+
+
