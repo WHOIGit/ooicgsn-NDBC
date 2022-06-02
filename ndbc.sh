@@ -19,7 +19,7 @@ source /home/ooiuser/anaconda3/bin/activate NDBC && echo "NDBC conda env activat
 
 source /home/ooiuser/anaconda3/bin/deactivate && echo "NDBC conda env deactivated.";
 
-rm -r $dataPath && echo "Removed temporary data folder.";
+#rm -r $dataPath && echo "Removed temporary data folder.";
 
 end_time=$(date -u "+%Y-%m-%dT%H:%M:%S%Z")
 echo "======== DONE: $end_time ========"

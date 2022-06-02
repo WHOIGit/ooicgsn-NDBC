@@ -465,7 +465,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP01CNSM BUOY dataset
-    CNSM = NDBC('CP01CNSM', 'D0014', '44076', currentTime, startTime,
+    CNSM = NDBC('CP01CNSM', 'D0016', '44076', currentTime, startTime,
                 cp01cnsm_data_map, cp01cnsm_name_map)
 
     # Get the data for the Buoy
@@ -494,7 +494,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP03ISSM BUOY Dataset
-    ISSM = NDBC('CP03ISSM', 'D0013', '44075', currentTime, startTime,
+    ISSM = NDBC('CP03ISSM', 'D0015', '44075', currentTime, startTime,
                 cp03issm_data_map, cp03issm_name_map)
 
     # Get the data for the Buoy
@@ -521,7 +521,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP04OSSM BUOY Dataset
-    OSSM = NDBC('CP04OSSM', 'D0013', '44077', currentTime, startTime,
+    OSSM = NDBC('CP04OSSM', 'D0015', '44077', currentTime, startTime,
                 cp04ossm_data_map, cp04ossm_name_map)
 
     # Get the data for the Buoy
@@ -532,13 +532,13 @@ if __name__ == '__main__':
     # Process the datasets
     OSSM.process_datasets(datasets)
 
-    # Merge the datasets
+    ## Merge the datasets
     OSSM.data = pd.DataFrame()
     for dset in OSSM.datasets.keys():
         OSSM.data = OSSM.data.merge(OSSM.datasets.get(dset), how='outer',
                                     left_index=True, right_index=True)
 
-    # Create xml data
+    ## Create xml data
     OSSM.xml = OSSM.parse_data_to_xml(OSSM.data)
 
     # Write the data out to a file
@@ -548,7 +548,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the GI01SUMO BUOY dataset
-    SUMO = NDBC('GI01SUMO', 'D0007', '44078', currentTime, startTime,
+    SUMO = NDBC('GI01SUMO', 'D0008', '44078', currentTime, startTime,
                 gi01sumo_data_map, gi01sumo_name_map)
 
     # Get the data for the Buoy
