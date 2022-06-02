@@ -39,7 +39,7 @@ class NDBC():
         wind_direction = 180/np.pi * np.arctan2(-u, -v)
         return wind_direction
 
-    def _connect_erddap(self, server="http://ooivm1.whoi.net/erddap",
+    def _connect_erddap(self, server="http://prospect.whoi.net:8080/erddap",
                         protocol="tabledap"):
         """Connect to the erddap server."""
         self._erddap = ERDDAP(
@@ -105,7 +105,7 @@ class NDBC():
             # Adjust the barometric pressure to sea-level
             df_binned['sea_level_pressure (hPa)'] = self.adjust_pressure_to_sea_level(
                 df_binned['barometric_pressure (mbar)'],
-                df_binned['air_temperature (degree_Celsius)'], 4.05)
+                df_binned['air_temperature (degrees_Celsius)'], 4.05)
         else:
             df_binned['sea_level_pressure (hPa)'] = np.nan
 
@@ -312,26 +312,26 @@ cp01cnsm_data_map = {
 }
 
 cp01cnsm_name_map = {
-    'atmp1': '001-METBK air_temperature (degree_Celsius)',
-    'atmp2': '002-METBK air_temperature (degree_Celsius)',
-    'baro1': '001-METBK sea_level_pressure (hPa)',
-    'baro2': '002-METBK sea_level_pressure (hPa)',
-    'lwrad': '001-METBK longwave_irradiance (W m-2)',
-    'rrh':   '001-METBK relative_humidity (percent)',
-    'srad1': '001-METBK shortwave_irradiance (W m-2)',
-    'wspd1': '001-METBK wind speed (m/s)',
-    'wspd2': '002-METBK wind speed (m/s)',
-    'wdir1': '001-METBK wind direction',
-    'wdir2': '002-METBK wind direction',
-    'wtmp1': '001-METBK sea_surface_temperature (degree_Celsius)',
-    'wtmp2': '002-METBK sea_surface_temperature (degree_Celsius)',
-    'tp001': '001-METBK sea_surface_temperature (degree_Celsius)',
-    'tp002': '002-METBK sea_surface_temperature (degree_Celsius)',
-    'sp001': '001-METBK psu (PSU)',
-    'sp002': '002-METBK psu (PSU)',
-    'dompd': '001-WAVSS significant_wave_period',
-    'mwdir': '001-WAVSS mean_wave_direction',
-    'wvhgt': '001-WAVSS significant_wave_height',
+    'atmp1': 'METBK-01-1 air_temperature (degrees_Celsius)',
+    'atmp2': 'METBK-02-1 air_temperature (degrees_Celsius)',
+    'baro1': 'METBK-01-1 sea_level_pressure (hPa)',
+    'baro2': 'METBK-02-1 sea_level_pressure (hPa)',
+    'lwrad': 'METBK-01-1 longwave_irradiance (W m-2)',
+    'rrh':   'METBK-01-1 relative_humidity (percent)',
+    'srad1': 'METBK-01-1 shortwave_irradiance (W m-2)',
+    'wspd1': 'METBK-01-1 wind speed (m/s)',
+    'wspd2': 'METBK-02-1 wind speed (m/s)',
+    'wdir1': 'METBK-01-1 wind direction',
+    'wdir2': 'METBK-02-1 wind direction',
+    'wtmp1': 'METBK-01-1 sea_surface_temperature (degrees_Celsius)',
+    'wtmp2': 'METBK-02-1 sea_surface_temperature (degrees_Celsius)',
+    'tp001': 'METBK-01-1 sea_surface_temperature (degrees_Celsius)',
+    'tp002': 'METBK-02-1 sea_surface_temperature (degrees_Celsius)',
+    'sp001': 'METBK-01-1 psu (PSU)',
+    'sp002': 'METBK-02-1 psu (PSU)',
+    'dompd': 'WAVSS-01-1 significant_wave_period',
+    'mwdir': 'WAVSS-01-1 mean_wave_direction',
+    'wvhgt': 'WAVSS-01-1 significant_wave_height',
 }
 
 # Pioneer Inshore Surface Mooring
@@ -355,16 +355,16 @@ cp03issm_data_map = {
 }
 
 cp03issm_name_map = {
-    'atmp1': '001-METBK air_temperature (degree_Celsius)',
-    'baro1': '001-METBK sea_level_pressure (hPa)',
-    'lwrad': '001-METBK longwave_irradiance (W m-2)',
-    'rrh':   '001-METBK relative_humidity (percent)',
-    'srad1': '001-METBK shortwave_irradiance (W m-2)',
-    'wspd1': '001-METBK wind speed (m/s)',
-    'wdir1': '001-METBK wind direction',
-    'wtmp1': '001-METBK sea_surface_temperature (degree_Celsius)',
-    'tp001': '001-METBK sea_surface_temperature (degree_Celsius)',
-    'sp001': '001-METBK psu (PSU)',
+    'atmp1': 'METBK-01-1 air_temperature (degrees_Celsius)',
+    'baro1': 'METBK-01-1 sea_level_pressure (hPa)',
+    'lwrad': 'METBK-01-1 longwave_irradiance (W m-2)',
+    'rrh':   'METBK-01-1 relative_humidity (percent)',
+    'srad1': 'METBK-01-1 shortwave_irradiance (W m-2)',
+    'wspd1': 'METBK-01-1 wind speed (m/s)',
+    'wdir1': 'METBK-01-1 wind direction',
+    'wtmp1': 'METBK-01-1 sea_surface_temperature (degrees_Celsius)',
+    'tp001': 'METBK-01-1 sea_surface_temperature (degrees_Celsius)',
+    'sp001': 'METBK-01-1 psu (PSU)',
 }
 
 # Pioneer Offshore Surface Mooring
@@ -388,16 +388,16 @@ cp04ossm_data_map = {
 }
 
 cp04ossm_name_map = {
-    'atmp1': '001-METBK air_temperature (degree_Celsius)',
-    'baro1': '001-METBK sea_level_pressure (hPa)',
-    'lwrad': '001-METBK longwave_irradiance (W m-2)',
-    'rrh':   '001-METBK relative_humidity (percent)',
-    'srad1': '001-METBK shortwave_irradiance (W m-2)',
-    'wspd1': '001-METBK wind speed (m/s)',
-    'wdir1': '001-METBK wind direction',
-    'wtmp1': '001-METBK sea_surface_temperature (degree_Celsius)',
-    'tp001': '001-METBK sea_surface_temperature (degree_Celsius)',
-    'sp001': '001-METBK psu (PSU)',
+    'atmp1': 'METBK-01-1 air_temperature (degrees_Celsius)',
+    'baro1': 'METBK-01-1 sea_level_pressure (hPa)',
+    'lwrad': 'METBK-01-1 longwave_irradiance (W m-2)',
+    'rrh':   'METBK-01-1 relative_humidity (percent)',
+    'srad1': 'METBK-01-1 shortwave_irradiance (W m-2)',
+    'wspd1': 'METBK-01-1 wind speed (m/s)',
+    'wdir1': 'METBK-01-1 wind direction',
+    'wtmp1': 'METBK-01-1 sea_surface_temperature (degrees_Celsius)',
+    'tp001': 'METBK-01-1 sea_surface_temperature (degrees_Celsius)',
+    'sp001': 'METBK-01-1 psu (PSU)',
 }
 
 # Global Irminger Surface Mooring
@@ -431,26 +431,26 @@ gi01sumo_data_map = {
     'fm64k2': 1
 }
 gi01sumo_name_map = {
-    'atmp1': '001-METBK air_temperature (degree_Celsius)',
-    'atmp2': '002-METBK air_temperature (degree_Celsius)',
-    'baro1': '001-METBK sea_level_pressure (hPa)',
-    'baro2': '002-METBK sea_level_pressure (hPa)',
-    'lwrad': '001-METBK longwave_irradiance (W m-2)',
-    'rrh':   '001-METBK relative_humidity (percent)',
-    'srad1': '001-METBK shortwave_irradiance (W m-2)',
-    'wspd1': '001-METBK wind speed (m/s)',
-    'wspd2': '002-METBK wind speed (m/s)',
-    'wdir1': '001-METBK wind direction',
-    'wdir2': '002-METBK wind direction',
-    'wtmp1': '001-METBK sea_surface_temperature (degree_Celsius)',
-    'wtmp2': '002-METBK sea_surface_temperature (degree_Celsius)',
-    'tp001': '001-METBK sea_surface_temperature (degree_Celsius)',
-    'tp002': '002-METBK sea_surface_temperature (degree_Celsius)',
-    'sp001': '001-METBK psu (PSU)',
-    'sp002': '002-METBK psu (PSU)',
-    'dompd': '001-WAVSS significant_wave_period',
-    'mwdir': '001-WAVSS mean_wave_direction',
-    'wvhgt': '001-WAVSS significant_wave_height',
+    'atmp1': 'METBK-01-1 air_temperature (degrees_Celsius)',
+    'atmp2': 'METBK-02-1 air_temperature (degrees_Celsius)',
+    'baro1': 'METBK-01-1 sea_level_pressure (hPa)',
+    'baro2': 'METBK-02-1 sea_level_pressure (hPa)',
+    'lwrad': 'METBK-01-1 longwave_irradiance (W m-2)',
+    'rrh':   'METBK-01-1 relative_humidity (percent)',
+    'srad1': 'METBK-01-1 shortwave_irradiance (W m-2)',
+    'wspd1': 'METBK-01-1 wind speed (m/s)',
+    'wspd2': 'METBK-02-1 wind speed (m/s)',
+    'wdir1': 'METBK-01-1 wind direction',
+    'wdir2': 'METBK-02-1 wind direction',
+    'wtmp1': 'METBK-01-1 sea_surface_temperature (degrees_Celsius)',
+    'wtmp2': 'METBK-02-1 sea_surface_temperature (degrees_Celsius)',
+    'tp001': 'METBK-01-1 sea_surface_temperature (degrees_Celsius)',
+    'tp002': 'METBK-02-1 sea_surface_temperature (degrees_Celsius)',
+    'sp001': 'METBK-01-1 psu (PSU)',
+    'sp002': 'METBK-02-1 psu (PSU)',
+    'dompd': 'WAVSS-01-1 significant_wave_period',
+    'mwdir': 'WAVSS-01-1 mean_wave_direction',
+    'wvhgt': 'WAVSS-01-1 significant_wave_height',
 }
 
 # =============================================================================
@@ -470,9 +470,9 @@ if __name__ == '__main__':
 
     # Get the data for the Buoy
     datasets = {
-        'CP01CNSM-BUOY-001-METBK': None,
-        'CP01CNSM-BUOY-002-METBK': None,
-        'CP01CNSM-BUOY-001-WAVSS': None,
+        'CP01CNSM-BUOY-METBK-01-1': None,
+        'CP01CNSM-BUOY-METBK-02-1': None,
+        'CP01CNSM-BUOY-WAVSS-01-1': None,
     }
 
     # Process the datasets
@@ -494,12 +494,12 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP03ISSM BUOY Dataset
-    ISSM = NDBC('CP03ISSM', 'D0014', '44075', currentTime, startTime,
+    ISSM = NDBC('CP03ISSM', 'D0015', '44075', currentTime, startTime,
                 cp03issm_data_map, cp03issm_name_map)
 
     # Get the data for the Buoy
     datasets = {
-        'CP03ISSM-BUOY-001-METBK': None,
+        'CP03ISSM-BUOY-METBK-01-1': None,
     }
 
     # Process the datasets
@@ -521,12 +521,12 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP04OSSM BUOY Dataset
-    OSSM = NDBC('CP04OSSM', 'D0014', '44077', currentTime, startTime,
+    OSSM = NDBC('CP04OSSM', 'D0015', '44077', currentTime, startTime,
                 cp04ossm_data_map, cp04ossm_name_map)
 
     # Get the data for the Buoy
     datasets = {
-        'CP04OSSM-BUOY-001-METBK': None,
+        'CP04OSSM-BUOY-METBK-01-1': None,
     }
 
     # Process the datasets
@@ -553,9 +553,9 @@ if __name__ == '__main__':
 
     # Get the data for the Buoy
     datasets = {
-        'GI01SUMO-BUOY-001-METBK': None,
-        'GI01SUMO-BUOY-002-METBK': None,
-        'GI01SUMO-BUOY-001-WAVSS': None,
+        'GI01SUMO-BUOY-METBK-01-1': None,
+        'GI01SUMO-BUOY-METBK-02-1': None,
+        'GI01SUMO-BUOY-WAVSS-01-1': None,
     }
 
     # Process the datasets
