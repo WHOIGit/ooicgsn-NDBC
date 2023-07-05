@@ -15,7 +15,7 @@ echo "======== STARTING: $start_time ========"
 
 mkdir $dataPath && echo "Creating new temporary data folder.";
 
-source /home/ooiuser/anaconda3/bin/activate NDBC && echo "NDBC conda env activated." && echo "Starting processing..." && python3 $codePath/ndbc_process_data.py && echo "Processing complete." && echo "Starting transfer..." && python3 $codePath/ndbc_transfer_data.py && echo "Transfer complete.";
+source /home/ooiuser/anaconda3/bin/activate NDBC && echo "NDBC conda env activated." && echo "Starting processing..." && python3 $codePath/process_data.py && echo "Processing complete." && echo "Starting transfer..." && python3 $codePath/ndbc_transfer_data.py && echo "Transfer complete.";
 
 source /home/ooiuser/anaconda3/bin/deactivate && echo "NDBC conda env deactivated.";
 
