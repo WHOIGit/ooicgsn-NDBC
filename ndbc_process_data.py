@@ -39,7 +39,7 @@ class NDBC():
         wind_direction = 180/np.pi * np.arctan2(-u, -v)
         return wind_direction
 
-    def _connect_erddap(self, server="http://prospect.whoi.net:8080/erddap",
+    def _connect_erddap(self, server="https://cgsn-dashboard.whoi.edu/erddap",
                         protocol="tabledap"):
         """Connect to the erddap server."""
         self._erddap = ERDDAP(
@@ -456,8 +456,8 @@ gi01sumo_name_map = {
 # =============================================================================
 if __name__ == '__main__':
     # Data directory path
-    #dataPath = '/home/ooiuser/ndbc/data'
-    dataPath = "data"
+    dataPath = '/home/ooiuser/ndbc/data'
+    #dataPath = "data"
     # Get the last 24-hours of data
     currentTime = dt.datetime.now(tz=pytz.UTC) - dt.timedelta(hours=2)
     startTime = currentTime - dt.timedelta(hours=2)
@@ -465,7 +465,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP01CNSM BUOY dataset
-    CNSM = NDBC('CP01CNSM', 'D0015', '44076', currentTime, startTime,
+    CNSM = NDBC('CP01CNSM', 'D0016', '44076', currentTime, startTime,
                 cp01cnsm_data_map, cp01cnsm_name_map)
 
     # Get the data for the Buoy
@@ -548,7 +548,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the GI01SUMO BUOY dataset
-    SUMO = NDBC('GI01SUMO', 'D0008', '44078', currentTime, startTime,
+    SUMO = NDBC('GI01SUMO', 'D0009', '44078', currentTime, startTime,
                 gi01sumo_data_map, gi01sumo_name_map)
 
     # Get the data for the Buoy
