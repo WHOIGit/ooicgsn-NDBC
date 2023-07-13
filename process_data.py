@@ -556,6 +556,7 @@ gi01sumo_name_map = {
 }
 
 BASE_PATH = 'raw/rawdata-west.oceanobservatories.org/files/'
+#BASE_PATH = '/mnt/cg-data/raw/'
 # -
 
 if __name__ == '__main__':
