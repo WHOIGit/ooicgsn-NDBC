@@ -456,8 +456,8 @@ gi01sumo_name_map = {
 # =============================================================================
 if __name__ == '__main__':
     # Data directory path
-    #dataPath = '/home/ooiuser/ndbc/data'
-    dataPath = "data"
+    dataPath = '/home/ooiuser/ndbc/data'
+    #dataPath = "data"
     # Get the last 24-hours of data
     currentTime = dt.datetime.now(tz=pytz.UTC)
     startTime = currentTime - dt.timedelta(hours=4)
@@ -574,7 +574,7 @@ if __name__ == '__main__':
     SUMO.data = SUMO.data.loc[slice(startTime, currentTime)]
 
     # Filter out any missing data
-    SUMO.data = SUMO.data.dropna(how='all')
+    #SUMO.data = SUMO.data.dropna(how='all')
 
     # Create xml data
     SUMO.xml = SUMO.parse_data_to_xml(SUMO.data)
