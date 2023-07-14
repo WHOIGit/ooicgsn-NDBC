@@ -73,7 +73,7 @@ class NDBC():
         # Limit the data request to the current deployment
         self._erddap.constraints = {
             'deploy_id=': self.deploy_id,
-            'time>=': self.startTime.strftime('%Y-%m-%dT%H:%M:%SZ')
+        #    'time>=': self.startTime.strftime('%Y-%m-%dT%H:%M:%SZ')
         }
 
         try:
@@ -456,95 +456,98 @@ gi01sumo_name_map = {
 # =============================================================================
 if __name__ == '__main__':
     # Data directory path
-    dataPath = '/home/ooiuser/ndbc/data'
-    #dataPath = "data"
+    #dataPath = '/home/ooiuser/ndbc/data'
+    dataPath = "data"
     # Get the last 24-hours of data
-    currentTime = dt.datetime.now(tz=pytz.UTC) - dt.timedelta(hours=2)
-    startTime = currentTime - dt.timedelta(hours=2)
+    currentTime = dt.datetime.now(tz=pytz.UTC)
+    startTime = currentTime - dt.timedelta(hours=4)
     timestamp = currentTime.strftime('%Y%m%d%H%M%S')
 
     # =========================================================================
     # Initialize the CP01CNSM BUOY dataset
-    CNSM = NDBC('CP01CNSM', 'D0016', '44076', currentTime, startTime,
-                cp01cnsm_data_map, cp01cnsm_name_map)
+    # Pioneer - NES Array has been deprecated
+    #CNSM = NDBC('CP01CNSM', 'D0016', '44076', currentTime, startTime,
+    #            cp01cnsm_data_map, cp01cnsm_name_map)
 
     # Get the data for the Buoy
-    datasets = {
-        'CP01CNSM-BUOY-METBK-01-1': None,
-        'CP01CNSM-BUOY-METBK-02-1': None,
-        'CP01CNSM-BUOY-WAVSS-01-1': None,
-    }
+    #datasets = {
+    #    'CP01CNSM-BUOY-METBK-01-1': None,
+    #    'CP01CNSM-BUOY-METBK-02-1': None,
+    #    'CP01CNSM-BUOY-WAVSS-01-1': None,
+    #}
 
     # Process the datasets
-    CNSM.process_datasets(datasets)
+    #CNSM.process_datasets(datasets)
 
     # Merge the datasets
-    CNSM.data = pd.DataFrame()
-    for dset in CNSM.datasets.keys():
-        CNSM.data = CNSM.data.merge(CNSM.datasets.get(dset), how='outer',
-                                    left_index=True, right_index=True)
+    #CNSM.data = pd.DataFrame()
+    #for dset in CNSM.datasets.keys():
+    #    CNSM.data = CNSM.data.merge(CNSM.datasets.get(dset), how='outer',
+    #                                left_index=True, right_index=True)
 
     # Create xml data
-    CNSM.xml = CNSM.parse_data_to_xml(CNSM.data)
+    #CNSM.xml = CNSM.parse_data_to_xml(CNSM.data)
 
     # Write the data out to a file
-    with open(f'{dataPath}/{CNSM.WMO}_{timestamp}.xml', 'w') as file:
-        for line in CNSM.xml:
-            file.write(f'{line}\n')
+    #with open(f'{dataPath}/{CNSM.WMO}_{timestamp}.xml', 'w') as file:
+    #    for line in CNSM.xml:
+    #        file.write(f'{line}\n')
 
     # =========================================================================
     # Initialize the CP03ISSM BUOY Dataset
-    ISSM = NDBC('CP03ISSM', 'D0015', '44075', currentTime, startTime,
-                cp03issm_data_map, cp03issm_name_map)
+    # Pioneer - NES array has been deprecated
+    #ISSM = NDBC('CP03ISSM', 'D0015', '44075', currentTime, startTime,
+    #            cp03issm_data_map, cp03issm_name_map)
 
     # Get the data for the Buoy
-    datasets = {
-        'CP03ISSM-BUOY-METBK-01-1': None,
-    }
+    #datasets = {
+    #    'CP03ISSM-BUOY-METBK-01-1': None,
+    #}
 
     # Process the datasets
-    ISSM.process_datasets(datasets)
+    #ISSM.process_datasets(datasets)
 
     # Merge the datasets
-    ISSM.data = pd.DataFrame()
-    for dset in ISSM.datasets.keys():
-        ISSM.data = ISSM.data.merge(ISSM.datasets.get(dset), how='outer',
-                                    left_index=True, right_index=True)
+    #ISSM.data = pd.DataFrame()
+    #for dset in ISSM.datasets.keys():
+     #   ISSM.data = ISSM.data.merge(ISSM.datasets.get(dset), how='outer',
+     #                               left_index=True, right_index=True)
 
     # Create xml data
-    ISSM.xml = ISSM.parse_data_to_xml(ISSM.data)
+    #ISSM.xml = ISSM.parse_data_to_xml(ISSM.data)
 
     # Write the data out to a file
-    with open(f'{dataPath}/{ISSM.WMO}_{timestamp}.xml', 'w') as file:
-        for line in ISSM.xml:
-            file.write(f'{line}\n')
+    #with open(f'{dataPath}/{ISSM.WMO}_{timestamp}.xml', 'w') as file:
+    #    for line in ISSM.xml:
+    #        file.write(f'{line}\n')
 
     # =========================================================================
     # Initialize the CP04OSSM BUOY Dataset
-    OSSM = NDBC('CP04OSSM', 'D0015', '44077', currentTime, startTime,
-                cp04ossm_data_map, cp04ossm_name_map)
+    # Pioneer - NES array has been deprecated
+    #OSSM = NDBC('CP04OSSM', 'D0015', '44077', currentTime, startTime,
+    #            cp04ossm_data_map, cp04ossm_name_map)
 
     # Get the data for the Buoy
-    datasets = {
-        'CP04OSSM-BUOY-METBK-01-1': None,
-    }
+    #datasets = {
+    #    'CP04OSSM-BUOY-METBK-01-1': None,
+    #}
 
     # Process the datasets
-    OSSM.process_datasets(datasets)
+    #OSSM.process_datasets(datasets)
 
     # Merge the datasets
-    OSSM.data = pd.DataFrame()
-    for dset in OSSM.datasets.keys():
-        OSSM.data = OSSM.data.merge(OSSM.datasets.get(dset), how='outer',
-                                    left_index=True, right_index=True)
+    #OSSM.data = pd.DataFrame()
+    #for dset in OSSM.datasets.keys():
+    #    OSSM.data = OSSM.data.merge(OSSM.datasets.get(dset), how='outer',
+    #                                left_index=True, right_index=True)
 
     # Create xml data
-    OSSM.xml = OSSM.parse_data_to_xml(OSSM.data)
+    #OSSM.xml = OSSM.parse_data_to_xml(OSSM.data)
 
     # Write the data out to a file
-    with open(f'{dataPath}/{OSSM.WMO}_{timestamp}.xml', 'w') as file:
-        for line in OSSM.xml:
-            file.write(f'{line}\n')
+    #with open(f'{dataPath}/{OSSM.WMO}_{timestamp}.xml', 'w') as file:
+    #    for line in OSSM.xml:
+    #        file.write(f'{line}\n')
 
     # =========================================================================
     # Initialize the GI01SUMO BUOY dataset
@@ -566,6 +569,12 @@ if __name__ == '__main__':
     for dset in SUMO.datasets.keys():
         SUMO.data = SUMO.data.merge(SUMO.datasets.get(dset), how='outer',
                                     left_index=True, right_index=True)
+        
+    # Filter the data for the last four hours
+    SUMO.data = SUMO.data.loc[slice(startTime, currentTime)]
+
+    # Filter out any missing data
+    SUMO.data = SUMO.data.dropna(how='all')
 
     # Create xml data
     SUMO.xml = SUMO.parse_data_to_xml(SUMO.data)
