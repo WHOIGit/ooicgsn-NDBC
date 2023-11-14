@@ -555,7 +555,7 @@ gi01sumo_name_map = {
     'wvhgt': 'WAVSS SIGNIFICANT_WAVE_HEIGHT',
 }
 
-BASE_PATH = 'raw/rawdata-west.oceanobservatories.org/files/'
+BASE_PATH = 'data/rawdata.oceanobservatories.org/'
 #BASE_PATH = '/mnt/cg-data/raw/'
 # -
 
@@ -579,7 +579,7 @@ if __name__ == '__main__':
     wavss = WAVSS()
 
     # Get the files and select for the last two
-    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, "GI01SUMO", "D00009")
+    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, "GI01SUMO", "D00010")
 
     # Load and parse the data, using only the last two available files
     for file in metbk1_files[-2:]:
