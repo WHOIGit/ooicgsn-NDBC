@@ -13,7 +13,7 @@ if __name__ == '__main__':
     dataPath = '/home/ooiuser/ndbc/data'
     
     # Load the data from the yaml file
-    user_info = yaml.load(open(f'{dataPath}/../ndbc_user_info.yaml'))
+    user_info = yaml.safe_load(open(f'{dataPath}/../ndbc_user_info.yaml'))
     USERNAME = user_info['username']
     PASSWORD = user_info['password']
     FTP = user_info['ftp']

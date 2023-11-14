@@ -551,7 +551,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the GI01SUMO BUOY dataset
-    SUMO = NDBC('GI01SUMO', 'D0009', '44078', currentTime, startTime,
+    SUMO = NDBC('GI01SUMO', 'D0010', '44078', currentTime, startTime,
                 gi01sumo_data_map, gi01sumo_name_map)
 
     # Get the data for the Buoy
