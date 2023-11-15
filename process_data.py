@@ -550,7 +550,7 @@ if __name__ == '__main__':
     dataPath = 'data'
 
     # Get the last 2-hours of data
-    currentTime = pd.Timestamp.now()
+    currentTime = pd.Timestamp.now(tz='UTC')
     startTime = currentTime.replace(minute=0, second=0, microsecond=0) - dt.timedelta(hours=4)
     timestamp = currentTime.strftime('%Y%m%d%H%M%S')
 
@@ -602,6 +602,7 @@ if __name__ == '__main__':
     merged_data["METBK1 SHORTWAVE_IRRADIANCE"] = merged_data["METBK1 SHORTWAVE_IRRADIANCE"].fillna(merged_data["METBK2 SHORTWAVE_IRRADIANCE"])
 
     # Filter the data for only the most recent data
+    merged_data = merged_data.tz_localize('UTC')
     mask = merged_data.index >= startTime
     merged_data = merged_data[mask]
     if merged_data.empty:
