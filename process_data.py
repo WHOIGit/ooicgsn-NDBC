@@ -1,18 +1,3 @@
-# ---
-# jupyter:
-#   jupytext:
-#     formats: ipynb,py:light
-#     text_representation:
-#       extension: .py
-#       format_name: light
-#       format_version: '1.5'
-#       jupytext_version: 1.14.1
-#   kernelspec:
-#     display_name: Python 3 (ipykernel)
-#     language: python
-#     name: python3
-# ---
-
 import numpy as np
 import pandas as pd
 import os
@@ -471,25 +456,26 @@ def get_files(BASE_PATH, buoy, deployment):
     metbk1 = []
     metbk2 = []
     wavss = []
+
+    # Filepath
+    FILEPATH = "/".join((BASE_PATH.rstrip("/"), buoy, deployment))
     
-    for root, dirs, files in os.walk(BASE_PATH):
-        if buoy.upper() in root:
-            if deployment in root:
-                if "metbk1" in root:
-                    for f in files:
-                        if f.endswith(".log"):
-                            metbk1.append(os.path.join(root, f))
-                elif "metbk2" in root:
-                    for f in files:
-                        if f.endswith(".log"):
-                            metbk2.append(os.path.join(root, f))
-                elif "wavss" in root:
-                    for f in files:
-                        if f.endswith(".log"):
-                            wavss.append(os.path.join(root, f))
-                else:
-                    pass
-    
+    for root, dirs, files in os.walk(FILEPATH):
+        if "metbk1" in root:
+            for f in files:
+                if f.endswith(".log"):
+                    metbk1.append(os.path.join(root, f))
+        elif "metbk2" in root:
+            for f in files:
+                if f.endswith(".log"):
+                    metbk2.append(os.path.join(root, f))
+        elif "wavss" in root:
+            for f in files:
+                if f.endswith(".log"):
+                    wavss.append(os.path.join(root, f))
+        else:
+            pass
+
     return sorted(metbk1), sorted(metbk2), sorted(wavss)
 
 
@@ -555,7 +541,7 @@ gi01sumo_name_map = {
     'wvhgt': 'WAVSS SIGNIFICANT_WAVE_HEIGHT',
 }
 
-BASE_PATH = 'data/rawdata.oceanobservatories.org/'
+BASE_PATH = 'data/rawdata.oceanobservatories.org/files/'
 #BASE_PATH = '/mnt/cg-data/raw/'
 # -
 
@@ -570,7 +556,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the GI01SUMO BUOY dataset
-    SUMO = NDBC('GI01SUMO', 'D00009', '44078', currentTime, startTime,
+    SUMO = NDBC('GI01SUMO', 'D00010', '44078', currentTime, startTime,
                 gi01sumo_data_map, gi01sumo_name_map)
 
     # Initialize the parser objects
@@ -579,7 +565,7 @@ if __name__ == '__main__':
     wavss = WAVSS()
 
     # Get the files and select for the last two
-    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, "GI01SUMO", "D00010")
+    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'GI01SUMO', 'D00010')
 
     # Load and parse the data, using only the last two available files
     for file in metbk1_files[-2:]:
@@ -609,6 +595,11 @@ if __name__ == '__main__':
 
     # Merge the datasets
     merged_data = df_metbk1.merge(df_metbk2, how="outer", left_index=True, right_index=True).merge(df_wavss, how="outer", left_index=True, right_index=True)
+
+    # Fill in missing met data that is only reported for one sensor
+    merged_data["METBK1 RELATIVE_HUMIDITY"] = merged_data["METBK1 RELATIVE_HUMIDITY"].fillna(merged_data["METBK2 RELATIVE_HUMIDITY"])
+    merged_data["METBK1 LONGWAVE_IRRADIANCE"] = merged_data["METBK1 LONGWAVE_IRRADIANCE"].fillna(merged_data["METBK2 LONGWAVE_IRRADIANCE"])
+    merged_data["METBK1 SHORTWAVE_IRRADIANCE"] = merged_data["METBK1 SHORTWAVE_IRRADIANCE"].fillna(merged_data["METBK2 SHORTWAVE_IRRADIANCE"])
 
     # Filter the data for only the most recent data
     mask = merged_data.index >= startTime
