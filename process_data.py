@@ -541,8 +541,8 @@ gi01sumo_name_map = {
     'wvhgt': 'WAVSS SIGNIFICANT_WAVE_HEIGHT',
 }
 
-BASE_PATH = 'data/rawdata.oceanobservatories.org/files/'
-#BASE_PATH = '/mnt/cg-data/raw/'
+#BASE_PATH = 'data/rawdata.oceanobservatories.org/files/'
+BASE_PATH = '/mnt/cg-data/raw/'
 # -
 
 if __name__ == '__main__':
