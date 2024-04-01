@@ -547,7 +547,8 @@ BASE_PATH = '/mnt/cg-data/raw/'
 
 if __name__ == '__main__':
     # Data directory path
-    dataPath = 'data'
+    # dataPath = 'data'
+    dataPath = '/home/ooiuser/ndbc/data'
 
     # Get the last 2-hours of data
     currentTime = pd.Timestamp.now(tz='UTC')
@@ -568,20 +569,29 @@ if __name__ == '__main__':
     metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'GI01SUMO', 'D00010')
 
     # Load and parse the data, using only the last two available files
-    for file in metbk1_files[-2:]:
-        with open(file) as f:
-            raw_data = f.readlines()
-            metbk1.parse_metbk(raw_data)
+    for file in sorted(metbk1_files[-2:]):
+        try:
+            with open(file) as f:
+                raw_data = f.readlines()
+                metbk1.parse_metbk(raw_data)
+        except:
+            pass
 
-    for file in metbk2_files[-2:]:
-        with open(file) as f:
-            raw_data = f.readlines()
-            metbk2.parse_metbk(raw_data)
+    for file in sorted(metbk2_files[-2:]):
+        try:
+            with open(file) as f:
+                raw_data = f.readlines()
+                metbk2.parse_metbk(raw_data)
+        except:
+            pass    
 
-    for file in wavss_files[-2:]:
-        with open(file) as f:
-            raw_data = f.readlines()
-            wavss.parse_wavss(raw_data)
+    for file in sorted(wavss_files[-2:]):
+        try:
+            with open(file) as f:
+                raw_data = f.readlines()
+                wavss.parse_wavss(raw_data)
+        except:
+            pass
 
     # Next, process the data into dataframes
     df_metbk1 = metbk1.process_data()
