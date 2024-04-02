@@ -380,6 +380,16 @@ class WAVSS():
 
                 # Put the parsed raw data into the data dictionary
                 self.WAVSS_DATA[key].append(line[index])
+
+        # Next, check if the data record is full. If not, fill in with two empty datapoints
+        if len(self.WAVSS_DATA['TIMESTAMP']) == 0:
+            currentTime = pd.Timestamp.now(tz='UTC').replace(tzinfo=None)
+            startTime = currentTime.replace(minute=0, second=0, microsecond=0) - dt.timedelta(hours=4)
+            for key in self.WAVSS_DATA.keys():
+                if key == 'TIMESTAMP':
+                    self.WAVSS_DATA[key] = [startTime, currentTime]
+                else:
+                    self.WAVSS_DATA[key] = [np.nan, np.nan]
                 
                 
     def process_data(self):
