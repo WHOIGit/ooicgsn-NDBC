@@ -221,7 +221,7 @@ class METBK():
                         self.METBK_DATA[key].append(raw_data[index])
                     
                     
-    def process_data(self):
+    def process_data(self, mooring):
         """
         Process the parsed METBK data into a dataframe with derived variables
         
@@ -236,6 +236,8 @@ class METBK():
         ----------
         self.METBK_DATA: dict
             The parsed METBK data stored in a dictionary
+        mooring: (str)
+            A string of the mooring name, e.g. GI01SUMO
             
         Returns
         -------
@@ -263,10 +265,17 @@ class METBK():
         df["SEA_SURFACE_PRACTICAL_SALINITY"] = calculate_practical_salinity(C, T, P)
 
         # Adjust the barometric pressure to sea-level
+        # First get the height of the sensor
+        if mooring.startswith("GI"):
+            height = 5.05
+        elif mooring.startswith("CP"):
+            height = 4.05
+        else:
+            pass
         df["SEA_LEVEL_PRESSURE"] = adjust_pressure_to_sea_level(
             df["BAROMETRIC_PRESSURE"], 
             df["AIR_TEMPERATURE"], 
-            4.05)
+            height)
 
         # Calculate the wind speed
         df['WIND_SPEED'] = calculate_wind_speed(
@@ -349,6 +358,7 @@ class WAVSS():
         ----------
         raw_data: (str)
             A string of each line of data from the instrument raw data file
+
             
         Returns
         -------
@@ -470,7 +480,7 @@ def get_files(BASE_PATH, buoy, deployment):
     # Filepath
     FILEPATH = "/".join((BASE_PATH.rstrip("/"), buoy, deployment))
     
-    for root, dirs, files in os.walk(FILEPATH):
+    for root, dirs, files in os.walk(FILEPATH):          
         if "metbk1" in root:
             for f in files:
                 if f.endswith(".log"):
@@ -479,6 +489,10 @@ def get_files(BASE_PATH, buoy, deployment):
             for f in files:
                 if f.endswith(".log"):
                     metbk2.append(os.path.join(root, f))
+        elif "metbk" in root and "metbk1" not in root and "metbk2" not in root:
+            for f in files:
+                if f.endswith(".log"):
+                    metbk1.append(os.path.join(root, f))
         elif "wavss" in root:
             for f in files:
                 if f.endswith(".log"):
@@ -551,14 +565,144 @@ gi01sumo_name_map = {
     'wvhgt': 'WAVSS SIGNIFICANT_WAVE_HEIGHT',
 }
 
-#BASE_PATH = 'data/rawdata.oceanobservatories.org/files/'
-BASE_PATH = '/mnt/cg-data/raw/'
+# Coastal Pioneer - MAB Central Surface Mooring
+cp10cnsm_data_map = {
+    # Data variables
+    'atmp1': -9999,
+    'atmp2': -9999,
+    'baro1': -9999,
+    'baro2': -9999,
+    'lwrad': -9999,
+    'rrh': -9999,
+    'srad1': -9999,
+    'wspd1': -9999,
+    'wspd2': -9999,
+    'wdir1': -9999,
+    'wdir2': -9999,
+    'wtmp1': -9999,
+    'wtmp2': -9999,
+    'tp001': -9999,
+    'tp002': -9999,
+    'sp001': -9999,
+    'sp002': -9999,
+    'dompd': -9999,
+    'mwdir': -9999,
+    'wvhgt': -9999,
+    # Fixed constants
+    'dp001': 0.95,
+    'dp002': 1.15,
+    'fm64iii': 830,
+    'fm64k1': 7,
+    'fm64k2': 1
+}
+
+cp10cnsm_name_map = {
+    'atmp1': 'METBK1 AIR_TEMPERATURE',
+    'atmp2': 'METBK2 AIR_TEMPERATURE',
+    'baro1': 'METBK1 SEA_LEVEL_PRESSURE',
+    'baro2': 'METBK2 SEA_LEVEL_PRESSURE',
+    'lwrad': 'METBK1 LONGWAVE_IRRADIANCE',
+    'rrh':   'METBK1 RELATIVE_HUMIDITY',
+    'srad1': 'METBK1 SHORTWAVE_IRRADIANCE',
+    'wspd1': 'METBK1 WIND_SPEED',
+    'wspd2': 'METBK2 WIND_SPEED',
+    'wdir1': 'METBK1 WIND_DIRECTION',
+    'wdir2': 'METBK2 WIND_DIRECTION',
+    'wtmp1': 'METBK1 SEA_SURFACE_TEMPERATURE',
+    'wtmp2': 'METBK2 SEA_SURFACE_TEMPERATURE',
+    'tp001': 'METBK1 SEA_SURFACE_TEMPERATURE',
+    'tp002': 'METBK2 SEA_SURFACE_TEMPERATURE',
+    'sp001': 'METBK1 SEA_SURFACE_PRACTICAL_SALINITY',
+    'sp002': 'METBK2 SEA_SURFACE_PRACTICAL_SALINITY',
+    'dompd': 'WAVSS SIGNIFICANT_PERIOD',
+    'mwdir': 'WAVSS MEAN_DIRECTION',
+    'wvhgt': 'WAVSS SIGNIFICANT_WAVE_HEIGHT',
+}
+
+# Coast Pioneer - MAB Northern Surface Mooring
+cp11nosm_data_map = {
+    # Data variables
+    'atmp1': -9999,
+    'baro1': -9999,
+    'lwrad': -9999,
+    'rrh': -9999,
+    'srad1': -9999,
+    'wdir1': -9999,
+    'wtmp1': -9999,
+    'tp001': -9999,
+    'sp001': -9999,
+    'dompd': -9999,
+    'mwdir': -9999,
+    'wvhgt': -9999,
+    # Fixed constants
+    'dp001': 0.95,
+    'fm64iii': 830,
+    'fm64k1': 7,
+    'fm64k2': 1
+}
+
+cp11nosm_name_map = {
+    'atmp1': 'METBK1 AIR_TEMPERATURE',
+    'baro1': 'METBK1 SEA_LEVEL_PRESSURE',
+    'lwrad': 'METBK1 LONGWAVE_IRRADIANCE',
+    'rrh':   'METBK1 RELATIVE_HUMIDITY',
+    'srad1': 'METBK1 SHORTWAVE_IRRADIANCE',
+    'wspd1': 'METBK1 WIND_SPEED',
+    'wdir1': 'METBK1 WIND_DIRECTION',
+    'wtmp1': 'METBK1 SEA_SURFACE_TEMPERATURE',
+    'tp001': 'METBK1 SEA_SURFACE_TEMPERATURE',
+    'sp001': 'METBK1 SEA_SURFACE_PRACTICAL_SALINITY',
+    'dompd': 'WAVSS SIGNIFICANT_PERIOD',
+    'mwdir': 'WAVSS MEAN_DIRECTION',
+    'wvhgt': 'WAVSS SIGNIFICANT_WAVE_HEIGHT',
+}
+
+# Coast Pioneer - MAB Southern Surface Mooring
+cp11sosm_data_map = {
+    # Data variables
+    'atmp1': -9999,
+    'baro1': -9999,
+    'lwrad': -9999,
+    'rrh': -9999,
+    'srad1': -9999,
+    'wdir1': -9999,
+    'wtmp1': -9999,
+    'tp001': -9999,
+    'sp001': -9999,
+    'dompd': -9999,
+    'mwdir': -9999,
+    'wvhgt': -9999,
+    # Fixed constants
+    'dp001': 0.95,
+    'fm64iii': 830,
+    'fm64k1': 7,
+    'fm64k2': 1
+}
+
+cp11sosm_name_map = {
+    'atmp1': 'METBK1 AIR_TEMPERATURE',
+    'baro1': 'METBK1 SEA_LEVEL_PRESSURE',
+    'lwrad': 'METBK1 LONGWAVE_IRRADIANCE',
+    'rrh':   'METBK1 RELATIVE_HUMIDITY',
+    'srad1': 'METBK1 SHORTWAVE_IRRADIANCE',
+    'wspd1': 'METBK1 WIND_SPEED',
+    'wdir1': 'METBK1 WIND_DIRECTION',
+    'wtmp1': 'METBK1 SEA_SURFACE_TEMPERATURE',
+    'tp001': 'METBK1 SEA_SURFACE_TEMPERATURE',
+    'sp001': 'METBK1 SEA_SURFACE_PRACTICAL_SALINITY',
+    'dompd': 'WAVSS SIGNIFICANT_PERIOD',
+    'mwdir': 'WAVSS MEAN_DIRECTION',
+    'wvhgt': 'WAVSS SIGNIFICANT_WAVE_HEIGHT',
+}
+
+BASE_PATH = 'data/rawdata-west.oceanobservatories.org/files/'
+#BASE_PATH = '/mnt/cg-data/raw/'
 # -
 
 if __name__ == '__main__':
     # Data directory path
-    # dataPath = 'data'
-    dataPath = '/home/ooiuser/ndbc/data'
+    dataPath = 'data'
+    #dataPath = '/home/ooiuser/ndbc/data'
 
     # Get the last 2-hours of data
     currentTime = pd.Timestamp.now(tz='UTC')
@@ -604,8 +748,8 @@ if __name__ == '__main__':
             pass
 
     # Next, process the data into dataframes
-    df_metbk1 = metbk1.process_data()
-    df_metbk2 = metbk2.process_data()
+    df_metbk1 = metbk1.process_data('GI01SUMO')
+    df_metbk2 = metbk2.process_data('GI01SUMO')
     df_wavss = wavss.process_data()
 
     # Add the headers
@@ -634,4 +778,192 @@ if __name__ == '__main__':
     # Write the data out to a file
     with open(f'{dataPath}/{SUMO.WMO}_{timestamp}.xml', 'w') as file:
         for line in SUMO.xml:
+            file.write(f'{line}\n')
+
+
+    # =========================================================================
+    # Initialize the CP10CNSM BUOY dataset
+    CNSM = NDBC('CP10CNSM', 'D00001', '41082', currentTime, startTime,
+                cp10cnsm_data_map, cp10cnsm_name_map)
+
+    # Initialize the parser objects
+    metbk1 = METBK()
+    metbk2 = METBK()
+    wavss = WAVSS()
+
+    # Get the files and select for the last two
+    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'CP10CNSM', 'D00001')
+
+    # Load and parse the data, using only the last two available files
+    for file in sorted(metbk1_files[-2:]):
+        try:
+            with open(file) as f:
+                raw_data = f.readlines()
+                metbk1.parse_metbk(raw_data)
+        except:
+            pass
+
+    for file in sorted(metbk2_files[-2:]):
+        try:
+            with open(file) as f:
+                raw_data = f.readlines()
+                metbk2.parse_metbk(raw_data)
+        except:
+            pass    
+
+    for file in sorted(wavss_files[-2:]):
+        try:
+            with open(file) as f:
+                raw_data = f.readlines()
+                wavss.parse_wavss(raw_data)
+        except:
+            pass
+
+    # Next, process the data into dataframes
+    df_metbk1 = metbk1.process_data('CP10CNSM')
+    df_metbk2 = metbk2.process_data('CP10CSNM')
+    df_wavss = wavss.process_data()
+
+    # Add the headers
+    df_metbk1 = add_header_prefix(df_metbk1, "METBK1 ")
+    df_metbk2 = add_header_prefix(df_metbk2, "METBK2 ")
+    df_wavss = add_header_prefix(df_wavss, "WAVSS ")
+
+    # Merge the datasets
+    merged_data = df_metbk1.merge(df_metbk2, how="outer", left_index=True, right_index=True).merge(df_wavss, how="outer", left_index=True, right_index=True)
+
+    # Fill in missing met data that is only reported for one sensor
+    merged_data["METBK1 RELATIVE_HUMIDITY"] = merged_data["METBK1 RELATIVE_HUMIDITY"].fillna(merged_data["METBK2 RELATIVE_HUMIDITY"])
+    merged_data["METBK1 LONGWAVE_IRRADIANCE"] = merged_data["METBK1 LONGWAVE_IRRADIANCE"].fillna(merged_data["METBK2 LONGWAVE_IRRADIANCE"])
+    merged_data["METBK1 SHORTWAVE_IRRADIANCE"] = merged_data["METBK1 SHORTWAVE_IRRADIANCE"].fillna(merged_data["METBK2 SHORTWAVE_IRRADIANCE"])
+
+    # Filter the data for only the most recent data
+    merged_data = merged_data.tz_localize('UTC')
+    mask = merged_data.index >= startTime
+    merged_data = merged_data[mask]
+    if merged_data.empty:
+        merged_data = CNSM.create_empty_dataset()
+
+    # Parse the data to xml
+    CNSM.xml = CNSM.parse_data_to_xml(merged_data)
+
+    # Write the data out to a file
+    with open(f'{dataPath}/{CNSM.WMO}_{timestamp}.xml', 'w') as file:
+        for line in CNSM.xml:
+            file.write(f'{line}\n')
+
+    # =========================================================================
+    # Initialize the CP11NOSM BUOY dataset
+    NOSM = NDBC('CP11NOSM', 'D00001', '44079', currentTime, startTime,
+                cp11nosm_data_map, cp11nosm_name_map)
+
+    # Initialize the parser objects
+    metbk1 = METBK()
+    wavss = WAVSS()
+
+    # Get the files and select for the last two
+    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'CP11NOSM', 'D00001')
+
+    # Load and parse the data, using only the last two available files
+    for file in sorted(metbk1_files[-2:]):
+        try:
+            with open(file) as f:
+                raw_data = f.readlines()
+                metbk1.parse_metbk(raw_data)
+        except:
+            pass
+
+    for file in sorted(wavss_files[-2:]):
+        try:
+            with open(file) as f:
+                raw_data = f.readlines()
+                wavss.parse_wavss(raw_data)
+        except:
+            pass
+
+    # Next, process the data into dataframes
+    df_metbk1 = metbk1.process_data('CP11NOSM')
+    df_wavss = wavss.process_data()
+
+    # Add the headers
+    df_metbk1 = add_header_prefix(df_metbk1, "METBK1 ")
+    df_wavss = add_header_prefix(df_wavss, "WAVSS ")
+
+    # Merge the datasets
+    merged_data = df_metbk1.merge(df_wavss, how="outer", left_index=True, right_index=True)
+
+    # Fill in missing met data that is only reported for one sensor
+    # No second METBK sensor on NOSM
+
+    # Filter the data for only the most recent data
+    merged_data = merged_data.tz_localize('UTC')
+    mask = merged_data.index >= startTime
+    merged_data = merged_data[mask]
+    if merged_data.empty:
+        merged_data = NOSM.create_empty_dataset()
+
+    # Parse the data to xml
+    NOSM.xml = NOSM.parse_data_to_xml(merged_data)
+
+    # Write the data out to a file
+    with open(f'{dataPath}/{NOSM.WMO}_{timestamp}.xml', 'w') as file:
+        for line in NOSM.xml:
+            file.write(f'{line}\n')
+
+   # =========================================================================
+    # Initialize the CP11NOSM BUOY dataset
+    SOSM = NDBC('CP11SOSM', 'D00001', '41083', currentTime, startTime,
+                cp11sosm_data_map, cp11sosm_name_map)
+
+    # Initialize the parser objects
+    metbk1 = METBK()
+    wavss = WAVSS()
+
+    # Get the files and select for the last two
+    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'CP11SOSM', 'D00001')
+
+    # Load and parse the data, using only the last two available files
+    for file in sorted(metbk1_files[-2:]):
+        try:
+            with open(file) as f:
+                raw_data = f.readlines()
+                metbk1.parse_metbk(raw_data)
+        except:
+            pass
+
+    for file in sorted(wavss_files[-2:]):
+        try:
+            with open(file) as f:
+                raw_data = f.readlines()
+                wavss.parse_wavss(raw_data)
+        except:
+            pass
+
+    # Next, process the data into dataframes
+    df_metbk1 = metbk1.process_data('CP11SOSM')
+    df_wavss = wavss.process_data()
+
+    # Add the headers
+    df_metbk1 = add_header_prefix(df_metbk1, "METBK1 ")
+    df_wavss = add_header_prefix(df_wavss, "WAVSS ")
+
+    # Merge the datasets
+    merged_data = df_metbk1.merge(df_wavss, how="outer", left_index=True, right_index=True)
+
+    # Fill in missing met data that is only reported for one sensor
+    # No second METBK sensor on NOSM
+
+    # Filter the data for only the most recent data
+    merged_data = merged_data.tz_localize('UTC')
+    mask = merged_data.index >= startTime
+    merged_data = merged_data[mask]
+    if merged_data.empty:
+        merged_data = SOSM.create_empty_dataset()
+
+    # Parse the data to xml
+    SOSM.xml = SOSM.parse_data_to_xml(merged_data)
+
+    # Write the data out to a file
+    with open(f'{dataPath}/{SOSM.WMO}_{timestamp}.xml', 'w') as file:
+        for line in SOSM.xml:
             file.write(f'{line}\n')
