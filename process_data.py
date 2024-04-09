@@ -695,14 +695,14 @@ cp11sosm_name_map = {
     'wvhgt': 'WAVSS SIGNIFICANT_WAVE_HEIGHT',
 }
 
-BASE_PATH = 'data/rawdata-west.oceanobservatories.org/files/'
-#BASE_PATH = '/mnt/cg-data/raw/'
+#BASE_PATH = 'data/rawdata-west.oceanobservatories.org/files/'
+BASE_PATH = '/mnt/cg-data/raw/'
 # -
 
 if __name__ == '__main__':
     # Data directory path
-    dataPath = 'data'
-    #dataPath = '/home/ooiuser/ndbc/data'
+    #dataPath = 'data'
+    dataPath = '/home/ooiuser/ndbc/data'
 
     # Get the last 2-hours of data
     currentTime = pd.Timestamp.now(tz='UTC')
