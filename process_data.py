@@ -187,6 +187,8 @@ class METBK():
 
         for line in raw_data:
             if line is not None:
+                # Need to replace any ":60.000" seconds with 59.999
+                line = re.sub(':60.000',':59.999',line)
                 # Check if the line contains data
                 try:
                     float(line.split()[-1])
