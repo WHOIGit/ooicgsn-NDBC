@@ -715,7 +715,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the GI01SUMO BUOY dataset
-    SUMO = NDBC('GI01SUMO', 'D00010', '44078', currentTime, startTime,
+    SUMO = NDBC('GI01SUMO', 'D00011', '44078', currentTime, startTime,
                 gi01sumo_data_map, gi01sumo_name_map)
 
     # Initialize the parser objects
@@ -724,7 +724,7 @@ if __name__ == '__main__':
     wavss = WAVSS()
 
     # Get the files and select for the last two
-    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'GI01SUMO', 'D00010')
+    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'GI01SUMO', 'D00011')
 
     # Load and parse the data, using only the last two available files
     for file in sorted(metbk1_files[-2:]):
