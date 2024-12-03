@@ -25,9 +25,10 @@ if __name__ == '__main__':
     # =========================================================================
     # Create a ftp session
     try:
+        
         # Attempt to establish a connection
     	with pysftp.Connection(HOST, username=USERNAME, private_key=PASSWORD) as sftp:
-    		log.append(','.join((timestamp, f'Connected to {HOST}')))
+        	log.append(','.join((timestamp, f'Connected to {HOST}')))
 
     		# Create a list of the files to transfer
     		xml_files = ["/".join((dataPath, x)) for x in os.listdir(dataPath)]
@@ -40,7 +41,7 @@ if __name__ == '__main__':
     				log.append(','.join((timestamp, file, 'success')))
     			except:
             		# If the transfer fails for whatever reason
- 	              	log.append(','.join((timestamp, xml_file, 'failed')))
+                    log.append(','.join((timestamp, xml_file, 'failed')))
 
     # If an FTP session can't be established
     except:
