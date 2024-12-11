@@ -17,6 +17,7 @@ if __name__ == '__main__':
     USERNAME = user_info['username']
     PASSWORD = user_info['password']
     HOST = user_info['host']
+    PRIVATE_KEY_FILE = user_info['private_key_file']
 
     timestamp = datetime.now(tz=pytz.UTC).strftime('%Y-%m-%dT%H:%M:%SZ')
     date = datetime.now(tz=pytz.UTC).strftime('%Y%m%d')
@@ -25,18 +26,32 @@ if __name__ == '__main__':
     # =========================================================================
     # Create a ftp session
     try:
+        # Create an SSH connection
+        ssh = paramiko.SSHClient()
+
+        # Add new host key to the local HostKeys ojbect (in case of missing)
+        # AutoAddPOlicy for missing host key to be set before connection setup
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        # Load the private key
+        private_key = paramiko.Ed25519Key.from_private_key_file(PRIVATE_KEY_FILE, PASSWORD)
         
-        # Attempt to establish a connection
-        with pysftp.Connection(HOST, username=USERNAME, private_key=PASSWORD) as sftp:
-            log.append(','.join((timestamp, f'Connected to {HOST}')))
-    		
+        # Connect the session
+        ssh.connect(HOST, username=USERNAME, pkey=private_key)
+        log.append(','.join((timestamp, f'Connected to {HOST}')))
+
+        # Transfer the data using a SFTP connection
+        try:
+            sftp = ssh.open_sftp()
+
             # Create a list of the files to transfer
             xml_files = ["/".join((dataPath, x)) for x in os.listdir(dataPath)]
             
-    		# Try transfering the files
+            # Transfer the files
             for file in xml_files:
                 try:
-                    sftp.put(file)
+                    filename = file.split("/")[-1]
+                    sftp.put(file, filename)
                     # Record transfer in log
                     log.append(','.join((timestamp, file, 'success')))
                 except:
