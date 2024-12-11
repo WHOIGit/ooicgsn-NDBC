@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import pysftp
+import paramiko
 from datetime import datetime
 import pytz
 import yaml
@@ -50,12 +50,12 @@ if __name__ == '__main__':
         for file in xml_files:
             try:
                 filename = file.split("/")[-1]
-                sftp.put(file, filename)
+                sftp.put(file, '/upload/'+filename)
                 # Record transfer in log
                 log.append(','.join((timestamp, file, 'success')))
             except:
                 # If the transfer fails for whatever reason
-                log.append(','.join((timestamp, xml_file, 'failed')))
+                log.append(','.join((timestamp, xml_file, 'failed')))n
 
     # If an FTP session can't be established
     except:
