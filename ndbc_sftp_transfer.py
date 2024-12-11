@@ -41,22 +41,21 @@ if __name__ == '__main__':
         log.append(','.join((timestamp, f'Connected to {HOST}')))
 
         # Transfer the data using a SFTP connection
-        try:
-            sftp = ssh.open_sftp()
+        sftp = ssh.open_sftp()
 
-            # Create a list of the files to transfer
-            xml_files = ["/".join((dataPath, x)) for x in os.listdir(dataPath)]
-            
-            # Transfer the files
-            for file in xml_files:
-                try:
-                    filename = file.split("/")[-1]
-                    sftp.put(file, filename)
-                    # Record transfer in log
-                    log.append(','.join((timestamp, file, 'success')))
-                except:
-                    # If the transfer fails for whatever reason
-                    log.append(','.join((timestamp, xml_file, 'failed')))
+        # Create a list of the files to transfer
+        xml_files = ["/".join((dataPath, x)) for x in os.listdir(dataPath)]
+        
+        # Transfer the files
+        for file in xml_files:
+            try:
+                filename = file.split("/")[-1]
+                sftp.put(file, filename)
+                # Record transfer in log
+                log.append(','.join((timestamp, file, 'success')))
+            except:
+                # If the transfer fails for whatever reason
+                log.append(','.join((timestamp, xml_file, 'failed')))
 
     # If an FTP session can't be established
     except:
