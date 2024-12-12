@@ -55,7 +55,7 @@ if __name__ == '__main__':
                 log.append(','.join((timestamp, file, 'success')))
             except:
                 # If the transfer fails for whatever reason
-                log.append(','.join((timestamp, xml_file, 'failed')))n
+                log.append(','.join((timestamp, file, 'failed')))
 
     # If an FTP session can't be established
     except:
