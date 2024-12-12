@@ -50,7 +50,7 @@ if __name__ == '__main__':
         for file in xml_files:
             try:
                 filename = file.split("/")[-1]
-                sftp.put(file, '/upload/'+filename)
+                sftp.put(file, '/uploads/'+filename)
                 # Record transfer in log
                 log.append(','.join((timestamp, file, 'success')))
             except:
