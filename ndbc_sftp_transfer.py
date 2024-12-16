@@ -11,7 +11,7 @@ if __name__ == '__main__':
     # =========================================================================
     # Data directory path
     dataPath = '/home/ooiuser/ndbc/data'
-    
+
     # Load the data from the yaml file
     user_info = yaml.safe_load(open('/home/ooiuser/ndbc/ndbc_sftp_info.yaml'))
     USERNAME = user_info['username']

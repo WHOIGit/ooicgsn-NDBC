@@ -29,7 +29,7 @@ python3 $codePath/process_data.py && echo "Processing complete."
 [ "$?" != "0" ] &&  logger -t "ndbc" "Error: /home/ooiuser/ndbc/ndbc-code/ndbc.sh - Processing data failed." && exit
 
 echo "Starting transfer..."
-python3 $codePath/ndbc_transfer_data.py && echo "Transfer complete."
+python3 $codePath/ndbc_sftp_transfer.py && echo "Transfer complete."
 [ "$?" != "0" ] &&  logger -t "ndbc" "Error: /home/ooiuser/ndbc/ndbc-code/ndbc.sh - Transferring data failed."
 
 source /home/ooiuser/anaconda3/bin/deactivate && echo "NDBC conda env deactivated.";
