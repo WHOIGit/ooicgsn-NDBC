@@ -787,7 +787,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP10CNSM BUOY dataset
-    CNSM = NDBC('CP10CNSM', 'D00001', '41082', currentTime, startTime,
+    CNSM = NDBC('CP10CNSM', 'D00002', '41082', currentTime, startTime,
                 cp10cnsm_data_map, cp10cnsm_name_map)
 
     # Initialize the parser objects
@@ -796,7 +796,7 @@ if __name__ == '__main__':
     wavss = WAVSS()
 
     # Get the files and select for the last two
-    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'CP10CNSM', 'D00001')
+    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'CP10CNSM', 'D00002')
 
     # Load and parse the data, using only the last two available files
     for file in sorted(metbk1_files[-2:]):
@@ -858,7 +858,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP11NOSM BUOY dataset
-    NOSM = NDBC('CP11NOSM', 'D00001', '44079', currentTime, startTime,
+    NOSM = NDBC('CP11NOSM', 'D00002', '44079', currentTime, startTime,
                 cp11nosm_data_map, cp11nosm_name_map)
 
     # Initialize the parser objects
@@ -866,7 +866,7 @@ if __name__ == '__main__':
     wavss = WAVSS()
 
     # Get the files and select for the last two
-    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'CP11NOSM', 'D00001')
+    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'CP11NOSM', 'D00002')
 
     # Load and parse the data, using only the last two available files
     for file in sorted(metbk1_files[-2:]):
@@ -916,7 +916,7 @@ if __name__ == '__main__':
 
    # =========================================================================
     # Initialize the CP11NOSM BUOY dataset
-    SOSM = NDBC('CP11SOSM', 'D00001', '41083', currentTime, startTime,
+    SOSM = NDBC('CP11SOSM', 'D00002', '41083', currentTime, startTime,
                 cp11sosm_data_map, cp11sosm_name_map)
 
     # Initialize the parser objects
@@ -924,7 +924,7 @@ if __name__ == '__main__':
     wavss = WAVSS()
 
     # Get the files and select for the last two
-    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'CP11SOSM', 'D00001')
+    metbk1_files, metbk2_files, wavss_files = get_files(BASE_PATH, 'CP11SOSM', 'D00002')
 
     # Load and parse the data, using only the last two available files
     for file in sorted(metbk1_files[-2:]):
