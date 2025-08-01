@@ -715,7 +715,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the GI01SUMO BUOY dataset
-    SUMO = NDBC('GI01SUMO', 'D00011', '44078', currentTime, startTime,
+    SUMO = NDBC('GI01SUMO', 'D00012', '44078', currentTime, startTime,
                 gi01sumo_data_map, gi01sumo_name_map)
 
     # Initialize the parser objects
