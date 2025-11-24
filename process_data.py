@@ -795,7 +795,7 @@ if __name__ == '__main__':
 
     # =========================================================================
     # Initialize the CP10CNSM BUOY dataset
-    CNSM = NDBC('CP10CNSM', 'D00002', '41082', currentTime, startTime,
+    CNSM = NDBC('CP10CNSM', 'D00003', '41082', currentTime, startTime,
                 cp10cnsm_data_map, cp10cnsm_name_map)
 
     # Initialize the parser objects
